@@ -41,7 +41,7 @@
 <section class="section"><div class="card panel"><h2>错题复习已独立成页</h2><p>按考试、词汇／语法和复习状态筛选，每页只展示少量题目，新增真题时也不用修改成绩主页。</p><a class="nav-action" href="mistakes.html">进入错题复习库 →</a></div></section>
 <footer class="foot">数据来源：四套试卷的照片、蓝笔原始选择和红笔订正、第二套听力12/30，以及之前确认的修正（第一套第26和42题不算错误）。第一套的「？」根据此前复习册记录；第二套原有问号缺乏可靠独立识别，页面支持自行补标。正式JLPT使用尺度得分，这里的百分比只用于卷面模拟比较，不等于考试正式得分。复习进度存储在本机浏览器，清除站点数据可能会丢失记录。</footer></main></div>
 <script>
-const results=[{name:"第一套",wrong:[9,9,9]},{name:"第二套",wrong:[10,12,10]},{name:"第三套",wrong:[6,10,9]},{name:"第四套（阶段）",wrong:[6,12,0]}];
+const results=[{name:"第一套",wrong:[9,9,9]},{name:"第二套",wrong:[10,12,10]},{name:"第三套",wrong:[6,10,9]},{name:"第四套（阶段）",wrong:[6,12,null]}];
 const colors=['#4269d7','#e36b72','#14a68b'];const $=s=>document.querySelector(s);
 function graph(){
  const xs=[82,208,334,460], y=v=>234-v*1.9;let out='';
@@ -53,7 +53,7 @@ function graph(){
  $('#trendPlot').innerHTML=out;
  let names=['词汇','语法','阅读'],pals=['#4269d7','#14a68b','#d89d38','#9b78d0'],v=[[70,66.7,80,80],[47.1,29.4,41.2,29.4],[64,60,62.5]];
  $('#comparison').innerHTML=names.map((n,i)=>'<div class="compare-row"><div class="compare-top"><span>'+n+'</span><span class="nums">'+v[i].join('% → ')+'%</span></div>'+v[i].map((z,j)=>'<div class="bar-line"><div style="width:'+z+'%;background:'+pals[j]+'"></div></div>').join('')+'</div>').join('');
- $('#distributionBars').innerHTML=results.map(r=>'<div class="stackrow"><span>'+r.name+'</span><div class="stack">'+r.wrong.map((z,i)=>'<i style="width:'+(z/32*100)+'%;background:'+colors[i]+'" title="'+names[i]+':'+z+'题"></i>').join('')+'</div><small>'+r.wrong.reduce((a,b)=>a+b,0)+'题</small></div>').join('');
+ $('#distributionBars').innerHTML=results.map(r=>'<div class="stackrow"><span>'+r.name+'</span><div class="stack">'+r.wrong.map((z,i)=>z===null?'':'<i style="width:'+(z/32*100)+'%;background:'+colors[i]+'" title="'+names[i]+':'+z+'题"></i>').join('')+'</div><small>'+r.wrong.reduce((a,b)=>a+b,0)+'题</small></div>').join('');
  const types=[['汉字读音',1,1,2],['汉字书写',2,0,1],['构词',2,0,0],['语境选词',2,4,2],['近义词',0,2,0],['词语用法',2,3,1],['语法选择',5,8,6],['语法排序',4,4,4],['阅读（整体）',9,10,9]];
  $('#breakdown').innerHTML='<div class="table-wrap"><table style="min-width:400px"><thead><tr><th>题型</th><th>第一套</th><th>第二套</th><th>第三套</th></tr></thead><tbody>'+types.map(([k,a,b,c])=>'<tr><td>'+k+'</td><td>'+a+'</td><td>'+b+'</td><td>'+c+'</td></tr>').join('')+'</tbody></table></div>';
 }
